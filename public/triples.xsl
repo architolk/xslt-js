@@ -12,6 +12,7 @@
     <xsl:for-each select="rdf:RDF/*">
       <node id="{@rdf:about}" type="{rdf:type/@rdf:resource}"><xsl:value-of select="rdfs:label"/></node>
     </xsl:for-each>
+		<xsl:copy-of select="rdf:RDF"/>
   </xmlroot>
 </xsl:template>
 

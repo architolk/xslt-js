@@ -65,7 +65,7 @@ var quads = parser.parse(ttltext);
   store.addQuads(quads);
   store.forSubjects( s => {
       //Subject
-      var xmlnode = xmldoc.createElementNS(NS_RDF,"Description");
+      var xmlnode = xmldoc.createElementNS(NS_RDF,"rdf:Description");
       if (s.termType==BLANK_NODE) {
         xmlnode.setAttributeNS(NS_RDF,"nodeID",s.value);
       } else if (s.termType==NAMED_NODE) {
