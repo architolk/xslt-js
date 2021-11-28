@@ -1,0 +1,34 @@
+{
+  "name": "xslt-js",
+  "version": "1.0.0",
+  "description": "Javascript stylesheet transform engine",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/architolk/xslt-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/architolk/xslt-js/issues"
+  },
+  "homepage": "https://github.com/architolk/xslt-js#readme",
+  "devDependencies": {
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "dependencies": {
+    "n3": "^1.11.2",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "stream": "^0.0.2",
+    "streamify-string": "^1.0.1",
+    "util": "^0.12.4"
+  }
+}
