@@ -10,7 +10,7 @@
 <xsl:template match="/">
   <xmlroot>
     <xsl:for-each select="rdf:RDF/*">
-      <node id="{@rdf:about}"><xsl:value-of select="rdfs:label"/></node>
+      <node id="{@rdf:about}" type="{rdf:type/@rdf:resource}"><xsl:value-of select="rdfs:label"/></node>
     </xsl:for-each>
   </xmlroot>
 </xsl:template>

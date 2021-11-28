@@ -3,4 +3,5 @@
 
 ex:Persoon a rdfs:Class;
   rdfs:label "Persoon";
+  rdfs:comment "Some comment"@en
 .

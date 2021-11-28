@@ -2,6 +2,9 @@ const Streamify = require('streamify-string');
 const N3 = require('n3');
 
 const NS_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+const NS_XML = "http://www.w3.org/XML/1998/namespace";
+const BLANK_NODE = "BlankNode";
+const NAMED_NODE = "NamedNode";
 
 function loadXMLDoc(filename) {
   var xhttp;
@@ -37,6 +40,18 @@ function download(data, filename, type) {
     }
 }
 
+function separateNamespaceAndLocalName(uri) {
+  var ret = {}
+  var idx = uri.lastIndexOf('#')
+  if (idx <= 0) {
+    idx = uri.lastIndexOf('/')
+  }
+  if (idx <= 0) { /* should fail? */ }
+  ret['namespace'] = uri.substring(0, idx + 1)
+  ret['localname'] = uri.substring(idx + 1, uri.length)
+  return ret
+}
+
 function stringToXML(ttltext, xslname) {
 
 const xmlparser = new DOMParser();
@@ -49,9 +64,36 @@ var quads = parser.parse(ttltext);
 
   store.addQuads(quads);
   store.forSubjects( s => {
+      //Subject
       var xmlnode = xmldoc.createElementNS(NS_RDF,"Description");
-      xmlnode.setAttributeNS(NS_RDF,"about",s.value);
+      if (s.termType==BLANK_NODE) {
+        xmlnode.setAttributeNS(NS_RDF,"nodeID",s.value);
+      } else if (s.termType==NAMED_NODE) {
+        xmlnode.setAttributeNS(NS_RDF,"about",s.value);
+      } else {
+        //Should not occur...
+      }
       xmlroot.appendChild(xmlnode);
+      store.forEach( quad => {
+        //Predicate
+        var parts = separateNamespaceAndLocalName(quad.predicate.value);
+        console.log(parts['namespace']);
+        var xmlelem = xmldoc.createElementNS(parts['namespace'],parts['localname']);
+        xmlnode.appendChild(xmlelem);
+        //Object
+        if (quad.object.termType==BLANK_NODE) {
+          xmlelem.setAttributeNS(NS_RDF,"nodeID",quad.object.value);
+        } else if (quad.object.termType==NAMED_NODE) {
+          xmlelem.setAttributeNS(NS_RDF,"resource",quad.object.value);
+        } else {
+          if (quad.object.language) {
+            xmlelem.setAttributeNS(NS_XML,"lang",quad.object.language);
+          } else if (quad.object.datatype && quad.object.datatype.value !== 'http://www.w3.org/2001/XMLSchema#string') {
+            xmlelem.setAttributeNS(NS_RDF,"datatype",quad.object.datatype.value);
+          }
+          xmlelem.textContent = quad.object.value;
+        }
+      }, s);
   });
 
   var xsl = loadXMLDoc(xslname);
