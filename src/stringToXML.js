@@ -104,7 +104,7 @@ var quads = parser.parse(ttltext);
 
   var serializer = new XMLSerializer();
   var serialized = serializer.serializeToString(resultDocument);
-  download(serialized,"resultaat.xml","text/xml");
+  download(serialized,"result.graphml","application/graphml+xml");
 
   return
 }

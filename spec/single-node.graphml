@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:y="http://www.yworks.com/xml/graphml">
+  <key for="node" id="node" yfiles.type="nodegraphics"/>
+  <key for="edge" id="edge" yfiles.type="edgegraphics"/>
+  <graph edgedefault="directed" id="G">
+    <node id="n0">
+      <data key="node">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="100.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel>test<y:LabelModel><y:SmartNodeLabelModel/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter/></y:ModelParameter></y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+  </graph>
+</graphml>

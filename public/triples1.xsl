@@ -16,14 +16,17 @@
 	  <g:key for="node" id="node" yfiles.type="nodegraphics"/>
 	  <g:key for="edge" id="edge" yfiles.type="edgegraphics"/>
 	  <g:graph edgedefault="directed" id="G">
-			<xsl:apply-templates select="rdf:RDF/rdf:Description"/>
-			<xsl:for-each select="rdf:RDF/rdf:Description/*">
+			<xsl:apply-templates select="rdf:RDF/rdf:Description" mode="node"/>
+			<xsl:for-each select="rdf:RDF/rdf:Description/*[exists(rdf:resource)]">
+				<xsl:apply-templates select="." mode="edge">
+					<xsl:with-param name="index" select="position()"/>
+				</xsl:apply-templates>
 			</xsl:for-each>
 	  </g:graph>
 	</g:graphml>
 </xsl:template>
 
-<xsl:template match="rdf:Description">
+<xsl:template match="*" mode="node">
 	<xsl:variable name="label">
 		<xsl:choose>
 			<xsl:when test="rdfs:label[1]!=''"><xsl:value-of select="rdfs:label[1]"/></xsl:when>
@@ -41,6 +44,22 @@
 			</y:ShapeNode>
 		</g:data>
 	</g:node>
+</xsl:template>
+
+<xsl:template match="*" mode="edge">
+	<xsl:param name="index"/>
+	<xsl:if test="exists(key('subject',@rdf:resource))">
+		<edge id="e{$index}" source="{../@rdf:about}" target="{@rdf:resource}">
+      <data key="edge">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+	</xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

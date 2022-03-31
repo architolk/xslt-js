@@ -4,15 +4,6 @@
     <div id="xslt-js" />
     <script>
       XJS.init();
-
-      document.getElementById('file-selector').addEventListener('change', event => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', event => {
-          XJS.stringToXML(event.target.result,"triples.xsl");
-        });
-        reader.readAsText(file);
-      });
     </script>
   </body>
 </html>

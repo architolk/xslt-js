@@ -9,7 +9,7 @@ module.exports = {
     library: 'XJS',
     libraryTarget: 'umd'
   },
-  mode: 'development',
+  mode: 'production',
 
   resolve: {
       alias: { "stream": require.resolve("stream-browserify") }

@@ -3,5 +3,7 @@
 
 ex:Persoon a rdfs:Class;
   rdfs:label "Persoon";
+  rdfs:seeAlso ex:Partner;
   rdfs:comment "Some comment"@en
 .
+ex:Partner a rdfs:Class.
